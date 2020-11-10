@@ -4329,7 +4329,7 @@ partition_maybe_advertise_service(void)
     lowest[1] = NULL;
 
     for (service = thread_services; service; service = service->next) {
-        int port = service->port[0] | (service->port[1] << 8);
+        int port = (service->port[0] << 8) | service->port[1];
         SEGMENTED_IPv6_ADDR_GEN_SRP(service->address, srv_addr_buf);
 
         // A service only counts if its prefix is present and its prefix id is present and matches the

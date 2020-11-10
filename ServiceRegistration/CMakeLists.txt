@@ -11,6 +11,7 @@ target_compile_definitions(srp-client
 target_include_directories(srp-client
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/../mDNSShared
 )
 
 target_link_libraries(srp-client
