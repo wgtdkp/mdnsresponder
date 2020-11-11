@@ -539,6 +539,9 @@ srp_evaluate(comm_t *connection, dns_message_t *message, message_t *raw_message)
     if (signature->data.sig.inception != 0 || signature->data.sig.expiry != 0) {
         gettimeofday(&now, NULL);
         // The sender does the bracketing, so we can just do a simple comparison.
+        // Too strict for testing. It's normal case that an embedded device has no
+        // synced time.
+        /*
         if ((uint32_t)(now.tv_sec & UINT32_MAX) > signature->data.sig.expiry ||
             (uint32_t)(now.tv_sec & UINT32_MAX) < signature->data.sig.inception) {
             ERROR("signature is not timely: %lu < %lu < %lu does not hold",
@@ -546,6 +549,7 @@ srp_evaluate(comm_t *connection, dns_message_t *message, message_t *raw_message)
                   (unsigned long)signature->data.sig.expiry);
             goto badsig;
         }
+        */
     }
 
     // Now that we have the key, we can validate the signature.   If the signature doesn't validate,
