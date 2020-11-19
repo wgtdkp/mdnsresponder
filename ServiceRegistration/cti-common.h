@@ -37,7 +37,7 @@ typedef struct _cti_connection_t *cti_connection_t;
 #endif
 
 #ifndef NONNULL
-#ifdef __clang__
+#ifdef kkk__clang__
 #define NONNULL _Nonnull
 #else
 #define NONNULL
@@ -45,7 +45,7 @@ typedef struct _cti_connection_t *cti_connection_t;
 #endif
 
 #ifndef NULLABLE
-#ifdef __clang__
+#ifdef kkk__clang__
 #define NULLABLE _Nullable
 #else
 #define NULLABLE
