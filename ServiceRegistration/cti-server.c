@@ -37,7 +37,7 @@
 #include <sys/signal.h>
 #include <sys/un.h>
 #include <sys/unistd.h>
-#include <sys/ucred.h>
+//#include <sys/ucred.h>
 
 #include "cti-server.h"
 #include "cti-proto.h"
