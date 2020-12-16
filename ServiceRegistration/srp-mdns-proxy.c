@@ -21,6 +21,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <time.h>
 #include <unistd.h>
 #include <pwd.h>
 #include <errno.h>
@@ -2048,7 +2049,6 @@ srp_mdns_flush(void)
     }
     hosts = NULL;
 }
-
 
 static void
 usage(void)

@@ -220,7 +220,8 @@ srp_connect_udp(void *context, const uint8_t *port, uint16_t address_type, const
             return kDNSServiceErr_Invalid;
         }
         memcpy(&io_context->sockaddr.mAddress, address, 16);
-        memcpy(&io_context->sockaddr.mPort, port, 2);
+        io_context->sockaddr.mPort = (static_cast<uint16_t>(port[0]) << 8) + port[1];
+
 #ifdef OT_NETIF_INTERFACE_ID_THREAD
         io_context->sockaddr.mScopeId = OT_NETIF_INTERFACE_ID_THREAD;
 #endif

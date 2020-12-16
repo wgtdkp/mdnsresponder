@@ -538,12 +538,6 @@ cleanup:
 #endif
 }
 
-int
-srp_reset_key(const char *key_name, void *UNUSED os_context)
-{
-    return srp_remove_key_file(os_context, key_name);
-}
-
 // Local Variables:
 // mode: C
 // tab-width: 4

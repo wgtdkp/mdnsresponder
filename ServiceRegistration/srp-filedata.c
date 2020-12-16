@@ -196,4 +196,11 @@ srp_remove_key_file(void *host_context, const char *key_name)
 	}
 	return kDNSServiceErr_NoError;
 }
+
+int
+srp_reset_key(const char *key_name, void *UNUSED os_context)
+{
+    return srp_remove_key_file(os_context, key_name);
+}
+
 #endif // SRP_CRYPTO_MBEDTLS_INTERNAL
