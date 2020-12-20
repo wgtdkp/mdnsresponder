@@ -540,7 +540,7 @@ main(int argc, char **argv)
             srp_set_lease_times(lease_time, 7 * 24 * 3600); // specified host lease, 7 day key lease
         }
 
-        memcpy(&iport, port, 2);
+        iport = (port[0] << 8) + port[1];
         err = DNSServiceRegister(&sdref, 0, 0, hnbuf, "_ipps._tcp",
                                  NULL, NULL, iport, 0, NULL, register_callback, client);
         if (err != kDNSServiceErr_NoError) {
