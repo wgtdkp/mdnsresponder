@@ -509,7 +509,7 @@ dns_sig0_signature_to_wire_(dns_towire_state_t *NONNULL txn, srp_key_t *key, uin
                             const char *NONNULL signer_domain, int line)
 {
     ssize_t siglen = srp_signature_length(key);
-    uint8_t *start, *p_signer, *p_signature, *rrstart = txn->p;
+    uint8_t *start, *rrstart = txn->p;
 #ifndef NO_CLOCK
     struct timeval now;
 #endif
@@ -551,14 +551,7 @@ dns_sig0_signature_to_wire_(dns_towire_state_t *NONNULL txn, srp_key_t *key, uin
 #endif
         dns_u16_to_wire(txn, key_tag);
 
-        p_signer = txn->p;
-        // We store the name in uncompressed form because that's what we have to sign
-        if (signer_hostname != NULL) {
-            dns_name_to_wire(NULL, txn, signer_hostname);
-        }
-        dns_full_name_to_wire(NULL, txn, signer_domain);
-        // And that means we're going to have to copy the signature back earlier in the packet.
-        p_signature = txn->p;
+        dns_pointer_to_wire(NULL, txn, signer);
 
         // Sign the message, signature RRDATA (less signature) first.
         if (!srp_sign(txn->p, siglen, (uint8_t *)txn->message, rrstart - (uint8_t *)txn->message,
@@ -566,13 +559,6 @@ dns_sig0_signature_to_wire_(dns_towire_state_t *NONNULL txn, srp_key_t *key, uin
             txn->error = true;
             txn->line = __LINE__;
         } else {
-            // Now that it's signed, back up and store the pointer to the name, because we're trying
-            // to be as compact as possible.
-            txn->p = p_signer;
-            dns_pointer_to_wire(NULL, txn, signer); // Pointer to the owner name the key is attached to
-            // And move the signature earlier in the packet.
-            memmove(txn->p, p_signature, siglen);
-
             txn->p += siglen;
             dns_rdlength_end(txn);
         }
